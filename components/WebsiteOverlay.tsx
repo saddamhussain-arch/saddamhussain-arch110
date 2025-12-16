@@ -5,54 +5,48 @@
 
 import React, { useState, useEffect } from 'react';
 import { ArchitectureDiagram } from './ArchitectureDiagram';
-import { SparklesIcon, RocketLaunchIcon, AdjustmentsIcon, TerraformIcon } from './Icons';
+import { AgentWorkflow } from './AgentWorkflow';
+import { SatelliteView } from './SatelliteView';
+import { SparklesIcon, RocketLaunchIcon, AdjustmentsIcon, TerraformIcon, QuestionMarkCircleIcon, LightBulbIcon, GlobeIcon, CpuIcon } from './Icons';
 import { useAppContext } from '../context/AppContext';
 
-type Section = 'home' | 'objectives' | 'themes' | 'architecture' | 'team';
+type Section = 'home' | 'vision' | 'challenge' | 'products' | 'workflow' | 'team' | 'satellite' | 'contact';
 
 const RurtechLogo = ({ className = "h-12" }: { className?: string }) => (
-    <svg viewBox="0 0 300 80" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-            <linearGradient id="gradBlue" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#0ea5e9" />
-                <stop offset="100%" stopColor="#2563eb" />
-            </linearGradient>
-            <linearGradient id="gradGreen" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#4ade80" />
-                <stop offset="100%" stopColor="#16a34a" />
-            </linearGradient>
-            <linearGradient id="gradTeal" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#2dd4bf" />
-                <stop offset="100%" stopColor="#0d9488" />
-            </linearGradient>
-        </defs>
-        
-        {/* Abstract R Logo Mark */}
-        <g transform="translate(10, 10) scale(0.8)">
-            {/* Left Vertical Pillar (Blue) */}
-            <path d="M10 0 L30 10 V60 L10 50 Z" fill="url(#gradBlue)" />
-            
-            {/* Top Loop (Teal) */}
-            <path d="M10 0 H50 C70 0 70 30 50 30 H30 V10 L10 0" fill="url(#gradTeal)" />
-            
-            {/* Bottom Leg (Green) */}
-            <path d="M30 30 L50 30 L70 60 L50 60 L30 30" fill="url(#gradGreen)" />
-        </g>
-
-        {/* Text */}
-        <text x="80" y="52" fontFamily="Arial, sans-serif" fontWeight="900" fontSize="42" fill="#fff" letterSpacing="2">RURTECH</text>
-    </svg>
+    <div className={`flex flex-col ${className}`}>
+        <h1 className="text-2xl md:text-3xl font-black tracking-widest text-cyan-400" style={{ textShadow: '0 0 10px rgba(0,255,255,0.5)' }}>
+            RURTECH
+        </h1>
+        <span className="text-[10px] md:text-xs font-mono text-fuchsia-300 tracking-[0.2em] uppercase">
+            For Arayans LLP
+        </span>
+    </div>
 );
 
-const APPS = [
-    { id: 1, name: "Bhoomi", icon: "mic", color: "from-blue-500 to-cyan-500", desc: "Voice-First OS" },
-    { id: 2, name: "Naksha", icon: "map", color: "from-emerald-500 to-green-600", desc: "Village GIS" },
-    { id: 3, name: "Cocon", icon: "center_focus_strong", color: "from-amber-500 to-yellow-500", desc: "Crop Vision" },
-    { id: 4, name: "AgriVision", icon: "movie_creation", color: "from-purple-500 to-indigo-500", desc: "Future Sims" },
-    { id: 5, name: "Sentinel-X", icon: "cyclone", color: "from-red-500 to-orange-500", desc: "Climate AI" },
-    { id: 6, name: "Nari Raksha", icon: "shield_person", color: "from-pink-600 to-rose-600", desc: "Women's Safety" },
-    { id: 7, name: "Shiksha", icon: "school", color: "from-indigo-400 to-violet-500", desc: "Agri-Education" },
-];
+const RevolvingGalaxy = () => (
+    <div className="fixed inset-0 z-0 pointer-events-none opacity-50 mix-blend-screen overflow-hidden flex items-center justify-center">
+        {/* Container is significantly larger than viewport (vmax) to ensure coverage during rotation */}
+        <div className="w-[150vmax] h-[150vmax] animate-galaxy-spin flex-shrink-0">
+             <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/M101_hires_STScI-PRC2006-10a.jpg/1280px-M101_hires_STScI-PRC2006-10a.jpg" 
+                alt="Rotating Galaxy" 
+                className="w-full h-full object-cover"
+            />
+        </div>
+        {/* Vignette to blend edges and focus center */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_10%,#10002B_90%)]"></div>
+        
+        <style dangerouslySetInnerHTML={{__html: `
+            @keyframes galaxy-spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+            .animate-galaxy-spin {
+                animation: galaxy-spin 240s linear infinite;
+            }
+        `}} />
+    </div>
+);
 
 export const WebsiteOverlay: React.FC = () => {
     const [activeSection, setActiveSection] = useState<Section>('home');
@@ -68,356 +62,353 @@ export const WebsiteOverlay: React.FC = () => {
             onClick={() => setActiveSection(id)}
             className={`px-4 py-2 text-xs md:text-sm uppercase tracking-widest transition-all duration-300 border-b-2 
             ${activeSection === id 
-                ? 'text-cyan-400 border-cyan-400 font-bold shadow-[0_0_15px_rgba(34,211,238,0.4)]' 
-                : 'text-gray-400 border-transparent hover:text-white hover:border-gray-500'}`}
+                ? 'text-cyan-400 border-cyan-400 font-bold shadow-[0_0_15px_rgba(0,255,255,0.4)] bg-[#10002B]/50' 
+                : 'text-gray-400 border-transparent hover:text-white hover:border-fuchsia-500/50'}`}
         >
             {label}
         </button>
     );
 
     return (
-        <div className="min-h-screen flex flex-col font-sans selection:bg-cyan-500/40">
+        <div className="min-h-screen flex flex-col font-sans selection:bg-fuchsia-500/40 text-gray-100 relative">
+            {/* Full Screen Galaxy Background for Home */}
+            {activeSection === 'home' && <RevolvingGalaxy />}
+
             {/* Header */}
-            <header className="fixed top-0 left-0 right-0 z-50 bg-[#0f0c29]/90 backdrop-blur-xl border-b border-white/10 shadow-2xl transition-all duration-300">
+            <header className="fixed top-0 left-0 right-0 z-50 bg-[#10002B]/80 backdrop-blur-xl border-b border-fuchsia-500/20 shadow-2xl transition-all duration-300">
                 <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-                    <div className="flex items-center gap-4 cursor-pointer group" onClick={() => setActiveSection('home')}>
-                        <RurtechLogo className="h-12 w-auto drop-shadow-lg transform group-hover:scale-105 transition-transform" />
+                    <div className="cursor-pointer group" onClick={() => setActiveSection('home')}>
+                        <RurtechLogo />
                     </div>
                     
-                    <nav className="hidden md:flex gap-1">
-                        <NavButton id="home" label="Ecosystem" />
-                        <NavButton id="themes" label="Solutions" />
-                        <NavButton id="objectives" label="Vision" />
-                        <NavButton id="architecture" label="Tech" />
-                        <NavButton id="team" label="Leadership" />
+                    <nav className="hidden md:flex gap-1 overflow-x-auto no-scrollbar">
+                        <NavButton id="home" label="Home" />
+                        <NavButton id="vision" label="Vision" />
+                        <NavButton id="challenge" label="Challenge" />
+                        <NavButton id="products" label="Products" />
+                        <NavButton id="workflow" label="Workflow" />
+                        <NavButton id="team" label="Team" />
+                        <NavButton id="satellite" label="Satellite" />
                     </nav>
 
                     {/* Mobile Menu Icon */}
                     <div className="md:hidden text-white">
-                        <AdjustmentsIcon className="w-6 h-6" />
+                        <AdjustmentsIcon className="w-6 h-6 text-cyan-400" />
                     </div>
                 </div>
             </header>
 
             {/* Mobile Nav Strip */}
-            <div className="md:hidden fixed bottom-0 left-0 right-0 bg-[#0f0c29]/95 backdrop-blur-lg border-t border-indigo-900/50 z-50 flex justify-around p-3">
+            <div className="md:hidden fixed bottom-0 left-0 right-0 bg-[#10002B]/95 backdrop-blur-lg border-t border-fuchsia-900/50 z-50 flex justify-around p-3 overflow-x-auto">
                  <button onClick={() => setActiveSection('home')} className={`p-2 rounded-full ${activeSection === 'home' ? 'text-cyan-400 bg-cyan-900/30' : 'text-gray-400'}`}><RocketLaunchIcon className="w-6 h-6"/></button>
-                 <button onClick={() => setActiveSection('themes')} className={`p-2 rounded-full ${activeSection === 'themes' ? 'text-cyan-400 bg-cyan-900/30' : 'text-gray-400'}`}><SparklesIcon className="w-6 h-6"/></button>
-                 <button onClick={() => setActiveSection('team')} className={`p-2 rounded-full ${activeSection === 'team' ? 'text-cyan-400 bg-cyan-900/30' : 'text-gray-400'}`}><AdjustmentsIcon className="w-6 h-6"/></button>
+                 <button onClick={() => setActiveSection('workflow')} className={`p-2 rounded-full ${activeSection === 'workflow' ? 'text-cyan-400 bg-cyan-900/30' : 'text-gray-400'}`}><CpuIcon className="w-6 h-6"/></button>
+                 <button onClick={() => setActiveSection('satellite')} className={`p-2 rounded-full ${activeSection === 'satellite' ? 'text-cyan-400 bg-cyan-900/30' : 'text-gray-400'}`}><GlobeIcon className="w-6 h-6"/></button>
             </div>
 
             {/* Content Container */}
             <div className="flex-grow pt-32 px-6 pb-24 md:pb-20 max-w-7xl mx-auto w-full relative z-10">
                 
-                {/* --- HOME SECTION: MILKY WAY GALAXY CYCLE --- */}
+                {/* --- HERO SECTION --- */}
                 {activeSection === 'home' && (
-                    <div className="min-h-[75vh] flex flex-col justify-center items-center relative animate-fadeIn overflow-visible">
+                    <div className="min-h-[70vh] flex flex-col justify-center items-center text-center animate-fadeIn relative">
                         
-                        {/* Milky Way Background Accent */}
-                        <div className="absolute inset-0 pointer-events-none z-0">
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[radial-gradient(circle_at_center,rgba(88,28,135,0.4)_0%,rgba(15,23,42,0)_70%)] blur-3xl"></div>
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100%] h-[2px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent blur-sm rotate-45"></div>
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100%] h-[2px] bg-gradient-to-r from-transparent via-purple-500/50 to-transparent blur-sm -rotate-45"></div>
-                        </div>
-
-                        <div className="text-center mb-8 relative z-20">
-                            <h1 className="text-4xl md:text-6xl font-black text-white mb-2 drop-shadow-[0_0_20px_rgba(0,0,0,0.8)] tracking-tight">
-                                THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-white to-green-400">BHARAT</span> GALAXY
+                        {/* Decorative HUD Elements */}
+                        <div className="absolute top-0 left-0 w-32 h-32 border-l-2 border-t-2 border-cyan-500/30 rounded-tl-3xl pointer-events-none"></div>
+                        <div className="absolute bottom-0 right-0 w-32 h-32 border-r-2 border-b-2 border-fuchsia-500/30 rounded-br-3xl pointer-events-none"></div>
+                        
+                        <div className="relative z-10">
+                            <h1 className="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-fuchsia-400 mb-6 drop-shadow-[0_0_10px_rgba(0,255,255,0.3)] tracking-tight">
+                                EMPOWERING RURAL FUTURES<br/>THROUGH INNOVATION
                             </h1>
-                            <p className="text-xl text-cyan-100 max-w-2xl mx-auto backdrop-blur-sm bg-black/30 p-2 rounded-lg">
-                                Orbiting the Farmer • Powered by the Cosmos
-                            </p>
-                        </div>
-
-                        {/* 3D Animation Container */}
-                        <div className="relative w-full max-w-2xl aspect-square flex items-center justify-center perspective-1000">
                             
-                            {/* Central Node: ROTATING EARTH ONLY */}
-                            <div className="absolute z-10 flex flex-col items-center justify-center">
-                                {/* Earth Globe - SMALLER SIZE */}
-                                <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full shadow-[0_0_50px_rgba(30,58,138,0.5)] animate-spin-slow">
-                                    <div className="absolute inset-0 rounded-full bg-[url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Earth_Western_Hemisphere_transparent_background.png/600px-Earth_Western_Hemisphere_transparent_background.png')] bg-cover opacity-90 blur-[0.5px]"></div>
-                                    {/* Atmosphere Glow */}
-                                    <div className="absolute inset-0 rounded-full shadow-[inset_0_0_15px_rgba(0,0,0,0.8),0_0_15px_rgba(56,189,248,0.4)]"></div>
-                                </div>
-
-                                {/* SLOGAN - Positioned below the smaller earth */}
-                                <div className="mt-6 bg-gradient-to-r from-orange-600 via-white/10 to-green-600 backdrop-blur-md border border-white/20 px-6 py-2 rounded-full shadow-[0_0_20px_rgba(255,165,0,0.3)] transform hover:scale-105 transition-transform">
-                                    <h2 className="text-white font-black text-sm md:text-lg tracking-widest uppercase drop-shadow-md whitespace-nowrap">
-                                        JAI JAWAN • JAI KISAN
-                                    </h2>
-                                </div>
-                            </div>
-
-                            {/* Orbit Ring (Visual) */}
-                            <div className="absolute w-[80%] h-[80%] rounded-full border border-dashed border-cyan-500/20 animate-spin-slow pointer-events-none shadow-[0_0_30px_rgba(6,182,212,0.1)]"></div>
-                            <div className="absolute w-[60%] h-[60%] rounded-full border border-dotted border-purple-500/20 animate-spin-reverse pointer-events-none"></div>
-
-                            {/* Orbiting Apps */}
-                            <div className="absolute w-full h-full animate-spin-slow-3d" style={{ transformStyle: 'preserve-3d' }}>
-                                {APPS.map((app, index) => {
-                                    const angle = (index / APPS.length) * 360;
-                                    const radius = 45; // percentage
-                                    
-                                    return (
-                                        <div 
-                                            key={app.name}
-                                            className="absolute top-1/2 left-1/2 w-24 h-24 md:w-32 md:h-32 -ml-12 -mt-12 md:-ml-16 md:-mt-16 flex flex-col items-center justify-center"
-                                            style={{
-                                                transform: `rotate(${angle}deg) translate(${radius}vw) rotate(-${angle}deg)`, 
-                                            }}
-                                        >
-                                            {/* App Card */}
-                                            <div className={`w-full h-full rounded-2xl bg-gradient-to-br ${app.color} p-0.5 shadow-lg group hover:scale-110 transition-transform duration-300 cursor-pointer`}>
-                                                <div className="w-full h-full bg-black/80 backdrop-blur-md rounded-2xl flex flex-col items-center justify-center text-center p-2 relative overflow-hidden">
-                                                    {/* Glow effect */}
-                                                    <div className={`absolute inset-0 bg-gradient-to-br ${app.color} opacity-20 group-hover:opacity-40 transition-opacity`}></div>
-                                                    
-                                                    <span className={`material-symbols-outlined text-3xl md:text-4xl mb-2 text-transparent bg-clip-text bg-gradient-to-br ${app.color}`}>
-                                                        {app.icon}
-                                                    </span>
-                                                    <h3 className="text-xs md:text-sm font-bold text-white leading-tight">{app.name}</h3>
-                                                    <p className="text-[10px] text-gray-400 mt-1 leading-none">{app.desc}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                        
-                        {/* Legend / Call to Action */}
-                        <div className="mt-12 flex flex-wrap justify-center gap-4 relative z-20">
-                            <div className="px-4 py-2 bg-black/40 border border-orange-500/30 rounded-full text-xs text-orange-200 flex items-center gap-2">
-                                <span className="material-symbols-outlined text-sm">music_note</span>
-                                Sound: Vande Mataram (Slow Reverb)
-                            </div>
-                            <div className="px-4 py-2 bg-black/40 border border-green-500/30 rounded-full text-xs text-green-200 flex items-center gap-2">
-                                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                                Ecosystem Active
-                            </div>
-                        </div>
-
-                        {/* Inline Style for the custom 3D spin */}
-                        <style dangerouslySetInnerHTML={{__html: `
-                            @keyframes spin-slow-3d {
-                                0% { transform: rotate(0deg); }
-                                100% { transform: rotate(360deg); }
-                            }
-                            /* Override radius for different screens */
-                            @media (max-width: 768px) {
-                                .animate-spin-slow-3d > div {
-                                    transform: rotate(var(--angle)) translate(140px) rotate(calc(var(--angle) * -1)) !important;
-                                }
-                            }
-                            @media (min-width: 769px) {
-                                .animate-spin-slow-3d > div {
-                                    transform: rotate(var(--angle)) translate(280px) rotate(calc(var(--angle) * -1)) !important;
-                                }
-                            }
-                        `}} />
-                        
-                        {/* Inject custom variables for the rotation logic above */}
-                        <div className="hidden">
-                            {APPS.map((_, i) => (
-                                <style key={i}>{`.animate-spin-slow-3d > div:nth-child(${i + 1}) { --angle: ${(i / APPS.length) * 360}deg; }`}</style>
-                            ))}
-                        </div>
-
-                    </div>
-                )}
-
-                {/* --- THEMES / SOLUTIONS SECTION --- */}
-                {activeSection === 'themes' && (
-                    <div className="animate-slideUp pt-4">
-                        <div className="text-center mb-16">
-                            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">GALACTIC <span className="text-cyan-400">SCALE</span></h2>
-                            <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-                                Solutions that revolve around the farmer, powered by an ecosystem of intelligent agents.
+                            <p className="text-xl md:text-2xl text-gray-300 font-light max-w-3xl mb-12 leading-relaxed mx-auto">
+                                Leveraging <span className="text-cyan-400 font-bold">Voice-First AI</span> for Sustainable Development & Education in Rural Communities.
                             </p>
+                            
+                            <div className="flex gap-6 justify-center">
+                                <button 
+                                    onClick={() => setActiveSection('challenge')}
+                                    className="px-8 py-3 bg-fuchsia-600 hover:bg-fuchsia-500 text-white font-bold rounded shadow-[0_0_20px_rgba(255,0,255,0.4)] transition-all hover:scale-105 uppercase tracking-widest"
+                                >
+                                    Discover More
+                                </button>
+                                <button 
+                                    onClick={() => setActiveSection('workflow')}
+                                    className="px-8 py-3 bg-black/40 backdrop-blur-sm border border-cyan-400 text-cyan-400 hover:bg-cyan-400/10 font-bold rounded shadow-[0_0_20px_rgba(0,255,255,0.2)] transition-all hover:scale-105 uppercase tracking-widest"
+                                >
+                                    Live Workflow
+                                </button>
+                            </div>
                         </div>
-                        
-                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                            {[
-                                { 
-                                    title: "Crop Constellations", 
-                                    desc: "Mapping optimal crop patterns like stars in the sky, guided by satellite intelligence.", 
-                                    icon: "✨",
-                                    color: "from-purple-600/20 to-indigo-900/20"
-                                },
-                                { 
-                                    title: "Precision Orbit", 
-                                    desc: "IoT sensors orbiting the farm, delivering real-time telemetry on soil health.", 
-                                    icon: "🪐",
-                                    color: "from-cyan-500/20 to-blue-900/20"
-                                },
-                                { 
-                                    title: "Market Gravity", 
-                                    desc: "Connecting farmers directly to high-value markets, pulling profit back to the source.", 
-                                    icon: "🌌",
-                                    color: "from-pink-500/20 to-rose-900/20"
-                                },
-                                { 
-                                    title: "Universal Credit", 
-                                    desc: "Financial inclusion models that work universally, regardless of banking history.", 
-                                    icon: "💳",
-                                    color: "from-emerald-500/20 to-teal-900/20"
-                                }
-                            ].map((item, i) => (
-                                <div key={i} className={`relative group bg-[#1a1638]/80 backdrop-blur-md border border-white/10 p-8 rounded-2xl hover:border-cyan-500/50 transition-all duration-500 hover:-translate-y-2 overflow-hidden`}>
-                                    <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
-                                    <div className="relative z-10">
-                                        <div className="text-5xl mb-6 transform group-hover:scale-110 transition-transform duration-500 filter drop-shadow-lg">{item.icon}</div>
-                                        <h3 className="text-xl font-bold text-white mb-3 leading-tight min-h-[3rem]">{item.title}</h3>
-                                        <p className="text-gray-300 text-sm leading-relaxed">{item.desc}</p>
-                                    </div>
-                                </div>
-                            ))}
+
+                        {/* Status Ticker */}
+                        <div className="absolute bottom-10 w-full max-w-4xl bg-[#10002B]/80 border-y border-cyan-500/30 py-2 overflow-hidden flex items-center justify-between px-4 text-xs font-mono text-cyan-300/70 z-10">
+                            <span>SYSTEM STATUS: ONLINE</span>
+                            <span className="animate-pulse">● LIVE DATA FEED</span>
+                            <span>NODE: UTTAR PRADESH</span>
                         </div>
                     </div>
                 )}
 
-                {/* --- OBJECTIVES SECTION --- */}
-                {activeSection === 'objectives' && (
-                    <div className="animate-slideUp max-w-6xl mx-auto pt-6">
-                        <div className="flex flex-col md:flex-row gap-12 items-center">
-                            <div className="flex-1 text-left">
-                                <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white leading-tight">
-                                    MISSION <span className="text-purple-400">VISHWA GURU</span>
-                                </h2>
-                                <p className="text-xl text-gray-300 mb-8 leading-relaxed border-l-4 border-purple-500 pl-6">
-                                    India is destined to be the world's teacher. We are exporting not just software, but a philosophy: that cutting-edge technology can bloom from the grass roots.
+                {/* --- VISION & MISSION --- */}
+                {activeSection === 'vision' && (
+                    <div className="animate-slideUp pt-4 max-w-5xl mx-auto">
+                         <h2 className="text-3xl font-bold text-center mb-12 text-fuchsia-400 uppercase tracking-widest border-b border-fuchsia-500/30 pb-4 inline-block w-full">Core Philosophy</h2>
+                         
+                         <div className="grid md:grid-cols-2 gap-8">
+                            <div className="bg-[#1a0b36]/80 backdrop-blur-md border border-cyan-500/30 p-8 rounded-xl shadow-[0_0_30px_rgba(0,255,255,0.1)] hover:border-cyan-400 transition-colors group">
+                                <div className="text-5xl mb-6 group-hover:scale-110 transition-transform duration-500">✨</div>
+                                <h3 className="text-2xl font-bold text-white mb-4">VISION</h3>
+                                <p className="text-gray-300 leading-relaxed text-lg">
+                                    To bridge the literacy and digital divide gap in rural communities globally. We envision a world where technology serves everyone, regardless of their ability to read or write.
                                 </p>
-                                <div className="space-y-6">
-                                    {[
-                                        {
-                                            head: "Showcase Impact",
-                                            text: "Demonstrating that world-class AI can be built in rural India, for rural India."
-                                        },
-                                        {
-                                            head: "Unlock Potential",
-                                            text: "Proving that talent is universal, even if opportunity is not. We create the opportunity."
-                                        },
-                                        {
-                                            head: "Facilitate Learning",
-                                            text: "Like ISRO sharing launch capabilities, we share our agri-tech models with the Global South."
-                                        },
-                                        {
-                                            head: "Global Benchmarking",
-                                            text: "Setting the standard for frugal innovation—high impact, low cost, massive scale."
-                                        }
-                                    ].map((obj, i) => (
-                                        <div key={i} className="flex gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors border border-transparent hover:border-purple-500/30">
-                                            <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                                                {i + 1}
-                                            </div>
-                                            <div>
-                                                <h4 className="text-lg font-bold text-white mb-1">{obj.head}</h4>
-                                                <p className="text-gray-400 text-sm leading-relaxed">{obj.text}</p>
-                                            </div>
-                                        </div>
-                                    ))}
+                            </div>
+
+                            <div className="bg-[#1a0b36]/80 backdrop-blur-md border border-fuchsia-500/30 p-8 rounded-xl shadow-[0_0_30px_rgba(255,0,255,0.1)] hover:border-fuchsia-400 transition-colors group">
+                                <div className="text-5xl mb-6 group-hover:scale-110 transition-transform duration-500">🎯</div>
+                                <h3 className="text-2xl font-bold text-white mb-4">MISSION</h3>
+                                <p className="text-gray-300 leading-relaxed text-lg">
+                                    Developing cutting-edge, voice-first AI solutions to empower non-literate rural populations with access to essential services and economic opportunities.
+                                </p>
+                            </div>
+                         </div>
+                    </div>
+                )}
+
+                {/* --- PROBLEM & SOLUTION --- */}
+                {activeSection === 'challenge' && (
+                    <div className="animate-slideUp pt-4">
+                        <h2 className="text-3xl font-bold text-center mb-12 text-cyan-400 uppercase tracking-widest border-b border-cyan-500/30 pb-4">The Challenge & Solution</h2>
+                        
+                        <div className="grid md:grid-cols-2 gap-12">
+                            {/* Problem */}
+                            <div className="space-y-6">
+                                <div className="bg-red-900/20 border border-red-500/30 p-6 rounded-xl relative overflow-hidden h-full">
+                                    <div className="absolute top-0 right-0 bg-red-600/20 px-3 py-1 text-xs text-red-300 font-bold uppercase rounded-bl">Problem Detected</div>
+                                    <h3 className="text-xl font-bold text-red-400 mb-4 flex items-center gap-2">
+                                        <span className="text-2xl">⚠️</span> Systemic Exclusion
+                                    </h3>
+                                    <ul className="space-y-4 text-gray-300">
+                                        <li className="flex gap-3">
+                                            <span className="text-red-500 font-bold">></span>
+                                            <span>
+                                                <strong className="text-white">Literacy Barrier:</strong> 30-40 crore non-literate Indians cannot use text-based apps, locking them out of Digital Public Infrastructure.
+                                            </span>
+                                        </li>
+                                        <li className="flex gap-3">
+                                            <span className="text-red-500 font-bold">></span>
+                                            <span>
+                                                <strong className="text-white">Undetected Symptoms:</strong> Symptomatic diseases often go undetected until critical stages, leading to fatal outcomes among women ("Death Reason").
+                                            </span>
+                                        </li>
+                                        <li className="flex gap-3">
+                                            <span className="text-red-500 font-bold">></span>
+                                            <span>
+                                                <strong className="text-white">Educational Void:</strong> No tools exist for the illiterate to study based on their own interest and pace.
+                                            </span>
+                                        </li>
+                                        <li className="flex gap-3">
+                                            <span className="text-red-500 font-bold">></span>
+                                            <span>
+                                                <strong className="text-white">Land & Climate Crisis:</strong> 40% of farmers possess negligible land (0.002 ha) or are landless. Climate abnormalities and high population density make traditional farming unviable.
+                                            </span>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
-                            
-                            <div className="flex-1 w-full relative">
-                                {/* Visual Representation of Global Reach - Galaxy Style */}
-                                <div className="aspect-square bg-gradient-to-b from-[#1a1638] to-black rounded-full border border-purple-500/30 p-12 relative animate-spin-slow-reverse overflow-hidden">
-                                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30 animate-pulse"></div>
-                                     <div className="absolute inset-0 rounded-full border border-dashed border-cyan-500/20 animate-spin-slow"></div>
-                                     <div className="absolute inset-4 rounded-full border border-dashed border-purple-500/20 animate-spin-reverse"></div>
-                                     
-                                     <div className="w-full h-full bg-black/60 backdrop-blur-md rounded-full flex flex-col items-center justify-center text-center relative z-10 border border-white/10">
-                                        <RocketLaunchIcon className="w-20 h-20 text-purple-400 mb-4 transform -rotate-45" />
-                                        <h3 className="text-2xl font-bold text-white">Future Ready</h3>
-                                        <p className="text-purple-200/70 text-sm mt-2 uppercase tracking-widest">Powered by Talent</p>
-                                     </div>
+
+                            {/* Solution */}
+                            <div className="space-y-6">
+                                <div className="bg-green-900/20 border border-green-500/30 p-6 rounded-xl relative overflow-hidden h-full">
+                                    <div className="absolute top-0 right-0 bg-green-600/20 px-3 py-1 text-xs text-green-300 font-bold uppercase rounded-bl">Solution Deployed</div>
+                                    <h3 className="text-xl font-bold text-green-400 mb-4 flex items-center gap-2">
+                                        <span className="text-2xl">✅</span> Voice-First AI Ecosystem
+                                    </h3>
+                                    <ul className="space-y-4 text-gray-300">
+                                        <li className="flex gap-3">
+                                            <span className="text-green-500 font-bold">></span>
+                                            <span>
+                                                <strong className="text-white">Voice-First Interface:</strong> Zero literacy required. Works on basic feature phones in local dialects (Hindi, Bhojpuri, Awadhi).
+                                            </span>
+                                        </li>
+                                        <li className="flex gap-3">
+                                            <span className="text-green-500 font-bold">></span>
+                                            <span>
+                                                <strong className="text-white">AI by Sakhi:</strong> Early detection of disease symptoms before they become fatal, providing lifesaving health intervention for women.
+                                            </span>
+                                        </li>
+                                        <li className="flex gap-3">
+                                            <span className="text-green-500 font-bold">></span>
+                                            <span>
+                                                <strong className="text-white">Gurdro:</strong> Democratizing education by allowing everyone to study autonomously based on their own interests and curiosity.
+                                            </span>
+                                        </li>
+                                        <li className="flex gap-3">
+                                            <span className="text-green-500 font-bold">></span>
+                                            <span>
+                                                <strong className="text-white">BHOOMI Transparency:</strong> Enables landless farmers to direct-rent from large owners (60%). Big owners gain direct export access (Rice/Wheat), creating a fair, transparent economy.
+                                            </span>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
                 )}
 
-                {/* --- ARCHITECTURE SECTION --- */}
-                {activeSection === 'architecture' && (
-                    <div className="animate-slideUp pt-5">
-                        <div className="mb-10 text-center">
-                             <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">ENGINEERING <span className="text-cyan-400">CORE</span></h2>
-                             <p className="text-gray-400 max-w-3xl mx-auto">
-                                 The internal systems of our vehicle. Robust, redundant, and ready for launch.
-                             </p>
+                {/* --- PRODUCTS --- */}
+                {activeSection === 'products' && (
+                    <div className="animate-slideUp pt-4">
+                        <h2 className="text-3xl font-bold text-center mb-12 text-fuchsia-400 uppercase tracking-widest border-b border-fuchsia-500/30 pb-4">Our Flagship AI Products</h2>
+                        
+                        <div className="grid md:grid-cols-3 gap-6">
+                            {/* Bhoomi */}
+                            <div className="bg-[#1a0b36]/80 border border-cyan-500/50 p-6 rounded-xl hover:bg-[#25104a] transition-colors relative group overflow-hidden">
+                                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-600"></div>
+                                <div className="h-48 mb-4 overflow-hidden rounded-lg group-hover:scale-105 transition-transform duration-500">
+                                    <img 
+                                        src="https://images.unsplash.com/photo-1625246333195-5519a49d75f0?q=80&w=1000&auto=format&fit=crop" 
+                                        alt="Bhoomi Agriculture" 
+                                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                                    />
+                                </div>
+                                <h3 className="text-xl font-bold text-white mb-3">BHOOMI</h3>
+                                <p className="text-cyan-400 text-xs font-bold uppercase mb-4 tracking-widest">The Voice-First Ecosystem</p>
+                                <p className="text-gray-300 text-sm leading-relaxed">
+                                    The core platform providing an integrated 4-pillar voice-first ecosystem: Rainfall & Weather, Soil Moisture, Crop Yield Prediction, and a Literacy Learning Programme. Works on basic feature phones.
+                                </p>
+                            </div>
+
+                            {/* Sakhi */}
+                            <div className="bg-[#1a0b36]/80 border border-fuchsia-500/50 p-6 rounded-xl hover:bg-[#25104a] transition-colors relative group overflow-hidden">
+                                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-fuchsia-500 to-pink-600"></div>
+                                <div className="h-48 mb-4 overflow-hidden rounded-lg group-hover:scale-105 transition-transform duration-500">
+                                    <img 
+                                        src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&q=80&w=1000" 
+                                        alt="AI by Sakhi" 
+                                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                                    />
+                                </div>
+                                <h3 className="text-xl font-bold text-white mb-3">AI by Sakhi</h3>
+                                <p className="text-fuchsia-400 text-xs font-bold uppercase mb-4 tracking-widest">For Women</p>
+                                <p className="text-gray-300 text-sm leading-relaxed">
+                                    Empowering women with tailored voice-first AI assistance. Focuses on health, financial literacy, and essential services access, bypassing literacy barriers that disproportionately affect rural women.
+                                </p>
+                            </div>
+
+                            {/* Gurdro */}
+                            <div className="bg-[#1a0b36]/80 border border-yellow-500/50 p-6 rounded-xl hover:bg-[#25104a] transition-colors relative group overflow-hidden">
+                                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-500 to-orange-600"></div>
+                                <div className="h-48 mb-4 overflow-hidden rounded-lg group-hover:scale-105 transition-transform duration-500">
+                                    <img 
+                                        src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1000&auto=format&fit=crop" 
+                                        alt="Gurdro Education" 
+                                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                                    />
+                                </div>
+                                <h3 className="text-xl font-bold text-white mb-3">Gurdro</h3>
+                                <p className="text-yellow-400 text-xs font-bold uppercase mb-4 tracking-widest">Literacy App Concept</p>
+                                <p className="text-gray-300 text-sm leading-relaxed">
+                                    An automated, adaptive, and gamified voice learning program. Schedules 30-minute interactive lessons delivered via voice to build foundational literacy (Devanagari script, numerals) within 18 months.
+                                </p>
+                            </div>
                         </div>
-                        <ArchitectureDiagram />
+                    </div>
+                )}
+                
+                {/* --- WORKFLOW (ANIMATED) --- */}
+                {activeSection === 'workflow' && (
+                    <div className="animate-slideUp pt-4">
+                        <h2 className="text-3xl font-bold text-center mb-12 text-cyan-400 uppercase tracking-widest border-b border-cyan-500/30 pb-4">Intelligent Agent Ecosystem</h2>
+                        <AgentWorkflow />
+                         <div className="mt-12 text-center text-gray-400 max-w-2xl mx-auto">
+                            <p>Our distributed agent system processes voice inputs, documents, and satellite data in real-time, orchestrated by a Supervisor Agent to deliver actionable insights to the farmer.</p>
+                        </div>
                     </div>
                 )}
 
                 {/* --- TEAM SECTION --- */}
                 {activeSection === 'team' && (
-                    <div className="animate-slideUp pt-10 pb-20">
-                        <div className="text-center mb-16">
-                            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">MISSION <span className="text-purple-400">COMMANDERS</span></h2>
-                            <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-                                "We focus on talent, and talent can be developed without sources."
-                            </p>
-                        </div>
+                    <div className="animate-slideUp pt-4">
+                        <h2 className="text-3xl font-bold text-center mb-12 text-white uppercase tracking-widest border-b border-gray-700 pb-4">Leadership Team</h2>
                         
-                        <div className="flex flex-col md:flex-row justify-center items-stretch gap-8 px-4 max-w-6xl mx-auto mb-16">
-                            
-                            {/* CEO: Nabi Hussain */}
-                            <div className="w-full md:w-1/2 bg-[#0f0c29] border border-gray-800 rounded-3xl overflow-hidden hover:border-cyan-500/50 transition-all duration-300 group shadow-2xl relative">
-                                <div className="absolute inset-0 bg-gradient-to-b from-cyan-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                <div className="h-64 bg-gray-800 relative flex items-center justify-center overflow-hidden">
-                                     {/* Placeholder for Man Photo (CEO) */}
+                        <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+                            {/* Nabi Hussain */}
+                            <div className="bg-[#10002B] border border-cyan-500/30 rounded-2xl p-8 text-center hover:border-cyan-500 transition-all duration-300 group relative overflow-hidden">
+                                <div className="w-32 h-32 mx-auto rounded-full border-4 border-cyan-500 p-1 mb-6 relative z-10 bg-[#10002B]">
                                      <img 
-                                        src="https://placehold.co/600x600/1e293b/06b6d4?text=Nabi+Hussain+(Man)" 
+                                        src="https://placehold.co/400x400/10002B/00FFFF?text=Nabi" 
                                         alt="Nabi Hussain" 
-                                        className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
+                                        className="w-full h-full rounded-full object-cover"
                                      />
                                 </div>
-                                <div className="p-8 text-center relative z-10">
-                                    <h3 className="text-3xl font-bold text-white mb-1">Nabi Hussain</h3>
-                                    <div className="inline-block px-3 py-1 mt-2 mb-6 bg-cyan-900/50 border border-cyan-500/30 rounded text-cyan-400 font-bold uppercase tracking-widest text-xs">
-                                        Chief Executive Officer
-                                    </div>
-                                    <p className="text-gray-300 leading-relaxed text-sm">
-                                        The visionary leading Rurtech's global ascent. Nabi believes that leadership is about creating leaders, not followers. He is proof that with the right mindset, resources follow vision, not the other way around.
-                                    </p>
+                                <h3 className="text-2xl font-bold text-white mb-1">Nabi Hussain</h3>
+                                <p className="text-cyan-400 font-bold uppercase text-xs tracking-widest mb-4">Founder, CEO & CFO</p>
+                                <p className="text-gray-400 text-sm leading-relaxed mb-4">
+                                    Leads vision, strategy, and financial governance with deep understanding of rural ecosystems and agriculture-linked economies.
+                                </p>
+                                <div className="inline-block bg-cyan-900/30 px-3 py-1 rounded border border-cyan-500/30 text-cyan-300 text-xs font-mono">
+                                    Equity: 55%
                                 </div>
+                                {/* Background glow */}
+                                <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             </div>
 
-                            {/* CTO: Saddam Hussain */}
-                            <div className="w-full md:w-1/2 bg-[#0f0c29] border border-gray-800 rounded-3xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 group shadow-2xl relative">
-                                <div className="absolute inset-0 bg-gradient-to-b from-purple-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                <div className="h-64 bg-gray-800 relative flex items-center justify-center overflow-hidden">
-                                     {/* Placeholder for Boy Photo (CTO) */}
+                            {/* Saddam Hussain */}
+                            <div className="bg-[#10002B] border border-fuchsia-500/30 rounded-2xl p-8 text-center hover:border-fuchsia-500 transition-all duration-300 group relative overflow-hidden">
+                                <div className="w-32 h-32 mx-auto rounded-full border-4 border-fuchsia-500 p-1 mb-6 relative z-10 bg-[#10002B]">
                                      <img 
-                                        src="https://placehold.co/600x600/1e293b/a855f7?text=Saddam+Hussain+(Boy)" 
+                                        src="https://placehold.co/400x400/10002B/FF00FF?text=Saddam" 
                                         alt="Saddam Hussain" 
-                                        className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
+                                        className="w-full h-full rounded-full object-cover"
                                      />
                                 </div>
-                                <div className="p-8 text-center relative z-10">
-                                    <h3 className="text-3xl font-bold text-white mb-1">Saddam Hussain</h3>
-                                    <div className="inline-block px-3 py-1 mt-2 mb-6 bg-purple-900/50 border border-purple-500/30 rounded text-purple-400 font-bold uppercase tracking-widest text-xs">
-                                        Founder & CTO
-                                    </div>
-                                    <p className="text-gray-300 leading-relaxed text-sm">
-                                        The young prodigy architecting the galaxy of Rurtech's solutions. Saddam represents the untaped potential of India's youth—demonstrating that age is just a number when it comes to technical mastery and innovation.
-                                    </p>
+                                <h3 className="text-2xl font-bold text-white mb-1">Saddam Hussain</h3>
+                                <p className="text-fuchsia-400 font-bold uppercase text-xs tracking-widest mb-4">Co-Founder & CTO</p>
+                                <p className="text-gray-400 text-sm leading-relaxed mb-4">
+                                    Responsible for complete technology vision and execution. Expertise in AI/ML, Python, and cloud platforms with 13+ years experience.
+                                </p>
+                                <div className="inline-block bg-fuchsia-900/30 px-3 py-1 rounded border border-fuchsia-500/30 text-fuchsia-300 text-xs font-mono">
+                                    Equity: 45%
                                 </div>
+                                {/* Background glow */}
+                                <div className="absolute inset-0 bg-fuchsia-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             </div>
                         </div>
+                    </div>
+                )}
+                
+                {/* --- SATELLITE (LAST PAGE) --- */}
+                {activeSection === 'satellite' && (
+                    <div className="animate-slideUp pt-4 w-full">
+                         <SatelliteView />
+                    </div>
+                )}
 
-                        {/* Team Building CTA */}
-                        <div className="bg-gradient-to-r from-purple-900/40 to-blue-900/40 border border-white/10 rounded-2xl p-8 md:p-12 text-center max-w-4xl mx-auto backdrop-blur-sm relative overflow-hidden">
-                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 animate-pulse"></div>
-                            <h3 className="text-2xl font-bold text-white mb-4">Join the Starfleet</h3>
-                            <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
-                                We are looking for dreamers who do. If you believe that technology can solve humanity's oldest problems, your seat is waiting.
+                {/* --- CONTACT --- */}
+                {activeSection === 'contact' && (
+                    <div className="animate-slideUp pt-10 flex flex-col items-center">
+                        <div className="bg-[#10002B]/90 border border-gray-700 p-8 rounded-xl max-w-2xl w-full text-center shadow-2xl">
+                            <h2 className="text-2xl font-bold text-white mb-8">CONTACT US</h2>
+                            <div className="space-y-4 text-gray-300">
+                                <p className="flex items-center justify-center gap-2">
+                                    <span>📍</span> Bisrakh Jalalpur, Uttar Pradesh
+                                </p>
+                                <p className="flex items-center justify-center gap-2">
+                                    <span>📧</span> <a href="mailto:saddam.hussain@rurtechforarayans.com" className="hover:text-cyan-400 transition-colors">saddam.hussain@rurtechforarayans.com</a>
+                                </p>
+                                <p className="flex items-center justify-center gap-2">
+                                    <span>📱</span> 7042548323
+                                </p>
+                            </div>
+                            <div className="mt-8 pt-8 border-t border-gray-800 text-xs text-gray-500 flex justify-center gap-4">
+                                <a href="#" className="hover:text-white">Privacy Policy</a>
+                                <span>|</span>
+                                <a href="#" className="hover:text-white">Terms of Service</a>
+                            </div>
+                            <p className="mt-4 text-xs text-gray-600">
+                                &copy; 2024 RURTECH FOR ARAYANS LLP. ALL RIGHTS RESERVED.
                             </p>
-                            <button className="px-8 py-3 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-colors shadow-lg hover:shadow-white/20">
-                                View Mission Profiles
-                            </button>
                         </div>
                     </div>
                 )}
